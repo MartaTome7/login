@@ -1,6 +1,6 @@
 <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
-<mat-table [dataSource]="dataSource">
+<mat-table [dataSource]="dataSource" style="width: 50%">
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
@@ -16,3 +16,15 @@
     <mat-cell *matCellDef="let sala"> {{ sala.capacidade }} </mat-cell>
   </ng-container>
 </mat-table>
+
+<mat-paginator
+  #paginatorSalas
+  [length]="totalRows"
+  [pageIndex]="currentPage"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="pageChanged($event)"
+  aria-label="Select page"
+  showFirstLastButtons
+>
+</mat-paginator>

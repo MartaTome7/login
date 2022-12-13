@@ -16,58 +16,63 @@ export class HomeComponent implements OnInit {
   submitted: boolean = false;
   dataSource: MatTableDataSource<Sala> = new MatTableDataSource<Sala>();
   errorMessage: any;
+  inputNumeroSala: any;
   displayedColumns: string[] = ['numero', 'capacidade'];
+  totalRows = 100;
+  currentPage = 0;
+  pageSizeOptions: number[] = [2, 4, 6];
+  pageSize = this.pageSizeOptions[this.pageSizeOptions.length - 1];
   isLoading: boolean = false;
-
-  length = 50;
-  pageSize = 10;
-  pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
-  currentPage: number;
-  hidePageSize = false;
-  showPageSizeOptions = true;
-  showFirstLastButtons = true;
-  disabled = false;
-
-  pageEvent: PageEvent;
 
   constructor(
     private httpSalasService: HttpSalasService,
     private router: Router
   ) {}
 
+  @ViewChild('paginatorSalas') paginator: MatPaginator;
+
   ngOnInit() {
     this.getAllSalas();
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+  pageChanged(event: PageEvent) {
+    this.totalRows = event.length;
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.getAllSalas();
+  }
 
   getAllSalas() {
     this.isLoading = true;
-    this.httpSalasService.getAll(0, 0).subscribe({
-      next: (response) => {
-        this.dataSource.data = response.items;
-        setTimeout(() => {
-          this.pageIndex = this.currentPage;
-          this.length = response.totalCount;
-        });
-      },
-      error: (error: HttpErrorResponse) => {
-        console.error('Request failed with error' + error),
-          console.error(error.status);
-        if (error.status === 404) {
-          alert('Não existem salas na base de dados.'),
-            (this.dataSource.data = []);
-        } else if (error.status === 0) {
-          // mandar de volta para o login
-          this.router.navigate(['/login']);
-        }
-        this.errorMessage = error;
-      },
-      complete: () => {
-        //console.error('Request completed');
-        this.isLoading = false;
-      },
-    });
+    this.httpSalasService
+      .getAll(this.currentPage + 1, this.pageSize)
+      .subscribe({
+        next: (response) => {
+          this.dataSource.data = response.items;
+          setTimeout(() => {
+            this.paginator.pageIndex = this.currentPage;
+            this.paginator.length = response.totalCount;
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error('Request failed with error' + error),
+            console.error(error.status);
+          if (error.status === 404) {
+            alert('Não existem salas na base de dados.'),
+              (this.dataSource.data = []);
+          } else if (error.status === 0) {
+            // mandar de volta para o login
+            this.router.navigate(['/login']);
+          }
+          this.errorMessage = error;
+        },
+        complete: () => {
+          //console.error('Request completed');
+          this.isLoading = false;
+        },
+      });
   }
 }

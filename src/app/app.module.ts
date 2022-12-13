@@ -1,17 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './authentication/jwt.interceptor';
-import { HttpAuthenticationService } from './authentication/httpauthentication.service';
-import { HttpAlertService } from './authentication/alert/httpalert.service';
-import { RegisterComponent } from './authentication/register/register.component';
-import { AlertComponent } from './authentication/alert/alert.component';
-import { LoginComponent } from './authentication/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppRoutingModule } from './app-routing.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -31,6 +25,19 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+
+import { RegisterComponent } from './authentication/register/register.component';
+import { AlertComponent } from './authentication/alert/alert.component';
+import { LoginComponent } from './authentication/login/login.component';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+
+import { HttpAuthenticationService } from './authentication/httpauthentication.service';
+import { HttpAlertService } from './authentication/alert/httpalert.service';
+import { HttpSalasService } from './services/httpsalas.service';
+import { HttpReunioesService } from './services/httpreunioes.service';
+import { HttpRecursosService } from './services/httprecursos.service';
+import { HttpRecursosReuniaoService } from './services/httprecursosreuniao.service';
 
 @NgModule({
   imports: [
@@ -66,15 +73,15 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     LoginComponent,
     AlertComponent,
     RegisterComponent,
+    HomeComponent,
   ],
   bootstrap: [AppComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-
-    // HttpSalasService,
-    // HttpReunioesService,
-    // HttpRecursosService,
-    // HttpRecursosReuniaoService,
+    HttpSalasService,
+    HttpReunioesService,
+    HttpRecursosService,
+    HttpRecursosReuniaoService,
     HttpAuthenticationService,
     HttpAlertService,
   ],
