@@ -1,0 +1,27 @@
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  width: 500px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #fdbec4;
+  background-color: #f8d7da;
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+  margin-top: 20px;
+}
+
+h3 {
+  width: 90%;
+  height: 100%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

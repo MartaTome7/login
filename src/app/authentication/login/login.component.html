@@ -1,0 +1,43 @@
+<div class="container">
+  <mat-card>
+    <h1>Login</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="username"
+          (focus)="onFocus()"
+          required
+        />
+        <mat-error *ngIf="formControls.username.hasError('required')">
+          Campo obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          (focus)="onFocus()"
+          required
+        />
+        <mat-error *ngIf="formControls.password.hasError('required')">
+          Campo obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button type="submit" [disabled]="!loginForm.valid">
+        Login
+      </button>
+
+      <button mat-raised-button type="button" routerLink="/register">
+        Registrar
+      </button>
+    </form>
+    <mat-spinner *ngIf="loading"></mat-spinner>
+  </mat-card>
+</div>
