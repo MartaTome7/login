@@ -35,9 +35,6 @@ import { HomeComponent } from './home/home.component';
 import { HttpAuthenticationService } from './authentication/httpauthentication.service';
 import { HttpAlertService } from './authentication/alert/httpalert.service';
 import { HttpSalasService } from './services/httpsalas.service';
-import { HttpReunioesService } from './services/httpreunioes.service';
-import { HttpRecursosService } from './services/httprecursos.service';
-import { HttpRecursosReuniaoService } from './services/httprecursosreuniao.service';
 
 @NgModule({
   imports: [
@@ -79,9 +76,6 @@ import { HttpRecursosReuniaoService } from './services/httprecursosreuniao.servi
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     HttpSalasService,
-    HttpReunioesService,
-    HttpRecursosService,
-    HttpRecursosReuniaoService,
     HttpAuthenticationService,
     HttpAlertService,
   ],
